@@ -6,6 +6,7 @@ const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
+const section2 = document.querySelector('#section--2');
 
 ///////////////////////////////////////
 // Modal window
@@ -23,7 +24,7 @@ const closeModal = function () {
 btnsOpenModal.forEach(btn => btn.addEventListener('click', openModal));
 
 btnCloseModal.addEventListener('click', closeModal);
-overlay.addEventListener('click', closeModal);
+// overlay.addEventListener('click', closeModal);
 
 document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
@@ -87,4 +88,37 @@ btnScrollTo.addEventListener('click', function (e) {
 
   // Mordern way only works on mordern browsers
   // section1.scrollIntoView({ behavior: 'smooth' });
+});
+
+// Tabbed component
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+// tabs.forEach(t => {
+//   t.addEventListener('click', () => {
+//     console.log('TABS');
+//   });
+// });
+
+tabsContainer.addEventListener('click', function (e) {
+  const clicked = e.target.closest('.operations__tab');
+  // console.log(clicked);
+
+  // Guard Clause.
+  if (!clicked) return;
+
+  // Active tabs
+  tabs.forEach(t => {
+    t.classList.remove('operations__tab--active');
+  });
+  clicked.classList.add('operations__tab--active');
+
+  // Activate content area
+  tabsContent.forEach(c => {
+    c.classList.remove('operations__content--active');
+  });
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add('operations__content--active');
 });
